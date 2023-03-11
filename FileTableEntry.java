@@ -15,3 +15,4 @@ public class FileTableEntry {  // Each table entry should have
 	    seekPtr = inode.length;
     }
 }
+
