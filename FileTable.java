@@ -10,13 +10,34 @@
  
       // major public methods 
       public synchronized FileTableEntry falloc( String filename, String mode ) { 
+        short iNumber = -1;
+        Inode inode = null;
          // allocate a new file (structure) table entry for this file name 
-         // allocate/retrieve and register the corresponding inode using dir 
+         while(true) {       
+            // allocate/retrieve and register the corresponding inode using dir 
+            iNumber = (filename.equals("/") ? 0 : dir.namei(filename);
+            inode = new Inode(iNumber);
+            if(mode.compareTo("r")) {
+                break;
+            } else if(mode.compareTo("w") || mode.compareTo("w+") {
+                try {
+                    wait()
+                } catch(InterruptedException e) {} // possibly incorrect implementation
+            } else if(mode.compareTo("a")) {
+                iNumber = -1; // no more open
+                return null;
+            }
          // increment this inode's count 
+         inode.count++;
          // immediately write back this inode to the disk 
+         inode.toDisk(iNumber);
          // return a reference to this file (structure) table entry 
+         FileTableEntry e = new FileTableEntry(inode, iNumber, mode);
+         table.addElement(e);
+         return e;
       } 
  
+      // TODO
       public synchronized boolean ffree( FileTableEntry e ) { 
          // receive a file table entry reference 
          // save the corresponding inode to the disk 
