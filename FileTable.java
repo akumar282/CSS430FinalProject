@@ -17,13 +17,13 @@
             // allocate/retrieve and register the corresponding inode using dir 
             iNumber = (filename.equals("/") ? 0 : dir.namei(filename);
             inode = new Inode(iNumber);
-            if(mode.compareTo("r")) {
+            if(mode.compareTo("r") == 0) {
                 break;
-            } else if(mode.compareTo("w") || mode.compareTo("w+") {
+            } else if(mode.compareTo("w") == 0 || mode.compareTo("w+") == 0) {
                 try {
                     wait()
                 } catch(InterruptedException e) {} // possibly incorrect implementation
-            } else if(mode.compareTo("a")) {
+            } else if(mode.compareTo("a") == 0) {
                 iNumber = -1; // no more open
                 return null;
             }
